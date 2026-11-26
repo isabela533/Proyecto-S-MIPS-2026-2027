@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug run_tests",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/tools/run_tests.py",
+      "args": ["programs/hello.asm"],
+      "console": "integratedTerminal",
+      "env": {
+        "LOGISIM_JAR": "C:\\Users\\Isabela\\Desktop\\ac\\logisim-evolution-5.0.0-all.jar"
+      }
+    }
+  ]
+}

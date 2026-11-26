@@ -15,7 +15,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
 HERE = ROOT/'tools'
-JAR = os.environ.get('LOGISIM_JAR', '/snap/logisim-evolution-snapcraft/current/jar/logisim-evolution.jar')
+JAR = os.environ.get('LOGISIM_JAR', 'C:\\Users\\Isabela\\Desktop\\ac\\logisim-evolution-5.0.0-all.jar')
 MARS = os.environ.get('MARS_JAR', str(Path.home()/'Apps/mars/Mars4_5.jar'))
 JAVA = os.environ.get('JAVA', 'java')
 CICLOS_MAX = 60000  # con 4-5 ciclos por instruccion, el programa mas largo usa unos 8000
@@ -48,11 +48,13 @@ def main():
         print(f'Ejecutando {len(fuentes)} programas en la placa...', flush=True)
         orden = [JAVA, f'-Djava.util.prefs.userRoot={directorio}/prefs', '--class-path', JAR,
                  str(HERE/'Run.java'), str(args.circuito.resolve()), str(CICLOS_MAX), '0', *imagenes]
+        print("Lanzando Run.java con:", orden, flush=True)
         # Cada programa se informa en cuanto termina (la cosimulacion es lenta).
         proceso = subprocess.Popen(orden, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         resultados, fallos = [], 0
         for linea in proceso.stdout:
             if not linea.startswith('RESULTADO'):
+                print("[Run.java]:", linea.rstrip('\n'), flush=True)
                 continue
             _, imagen, detenido, ciclos, pc, tty = linea.rstrip('\n').split('\t')
             resultados.append(imagen)
